@@ -2,6 +2,7 @@ package com.jlee.bookstore.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
@@ -13,10 +14,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Entity
 public class Category implements Serializable {
     public static final long serialVersionUID = 5024048380744116098L;
 
@@ -28,4 +28,10 @@ public class Category implements Serializable {
 
     @OneToMany(mappedBy = "category")
     private List<Book> books = new ArrayList<>();
+
+    public Category(Integer id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
 }
