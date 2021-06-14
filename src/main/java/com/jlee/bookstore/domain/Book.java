@@ -38,10 +38,8 @@ public class Book implements Serializable {
     private Category category;
 
     public static Book ofDTO(final BookDTO bookDTO) {
-        return Book.builder()
+        return com.jlee.bookstore.domain.Book.builder()
                 .title(bookDTO.getTitle())
-                .author_name(bookDTO.getAuthor_name())
-                .description(bookDTO.getDescription())
                 .build();
     }
 

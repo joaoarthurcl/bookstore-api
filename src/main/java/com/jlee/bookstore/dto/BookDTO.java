@@ -1,6 +1,5 @@
 package com.jlee.bookstore.dto;
 
-import com.jlee.bookstore.domain.Book;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,14 +18,17 @@ public class BookDTO implements Serializable {
 
     private Integer id;
     private String title;
-    private String author_name;
-    private String description;
 
-    public BookDTO(Book book) {
+    public BookDTO(com.jlee.bookstore.domain.Book book) {
         super();
         this.id = book.getId();
         this.title = book.getTitle();
-        this.author_name = book.getAuthor_name();
-        this.description = book.getDescription();
+    }
+
+    public static BookDTO ofEntity(com.jlee.bookstore.domain.Book book) {
+        return BookDTO.builder()
+                .id(book.getId())
+                .title(book.getTitle())
+                .build();
     }
 }

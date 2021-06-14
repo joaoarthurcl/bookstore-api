@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -29,14 +30,14 @@ public class BookController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Book> findById(@PathVariable Integer id) {
-        Book obj = bookService.findById(id);
-        return ResponseEntity.ok().body(obj);
+    public ResponseEntity<BookDTO> findById(@PathVariable Integer id) {
+        Book book = bookService.findById(id);
+        return ResponseEntity.ok().body(BookDTO.ofEntity(book));
     }
 
     @GetMapping
-    public ResponseEntity<List<BookDTO>> findAll() {
-        final var books = this.bookService.findAll();
+    public ResponseEntity<List<BookDTO>> findAll(@RequestParam(value = "category", defaultValue = "0") Integer id_category) {
+        final var books = this.bookService.findAll(id_category);
         final var booksDTO = books.stream().map(BookDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok().body(booksDTO);
     }
@@ -49,9 +50,9 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BookDTO> update(@PathVariable Integer id, @RequestBody BookDTO bookDTO) {
-        final var obj = this.bookService.update(id, bookDTO);
-        return ResponseEntity.ok().body(new BookDTO(obj));
+    public ResponseEntity<Book> update(@PathVariable Integer id, @RequestBody Book book) {
+        final var obj = this.bookService.update(id, book);
+        return ResponseEntity.ok().body(obj);
     }
 
     @DeleteMapping("/{id}")

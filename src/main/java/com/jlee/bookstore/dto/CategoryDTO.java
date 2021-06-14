@@ -1,5 +1,6 @@
 package com.jlee.bookstore.dto;
 
+import com.jlee.bookstore.domain.Book;
 import com.jlee.bookstore.domain.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,5 +27,12 @@ public class CategoryDTO implements Serializable {
         this.id = category.getId();
         this.name = category.getName();
         this.description = category.getDescription();
+    }
+
+    public static CategoryDTO ofDTO(final Category category) {
+        return CategoryDTO.builder()
+                .name(category.getName())
+                .description(category.getDescription())
+                .build();
     }
 }

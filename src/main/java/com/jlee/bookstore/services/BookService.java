@@ -1,7 +1,6 @@
 package com.jlee.bookstore.services;
 
 import com.jlee.bookstore.domain.Book;
-import com.jlee.bookstore.dto.BookDTO;
 import com.jlee.bookstore.exceptions.ObjectNotFoundException;
 import com.jlee.bookstore.repositories.BookRepository;
 import org.springframework.stereotype.Service;
@@ -14,19 +13,22 @@ import java.util.Optional;
 public class BookService {
 
     private final BookRepository bookRepository;
+    private final CategoryService categoryService;
 
-    public BookService(BookRepository bookRepository) {
+    public BookService(BookRepository bookRepository, CategoryService categoryService) {
         this.bookRepository = bookRepository;
+        this.categoryService = categoryService;
     }
 
     public Book findById(Integer id) {
         Optional<Book> bookId = bookRepository.findById(id);
         return bookId.orElseThrow(() -> new ObjectNotFoundException(
-                "Object not found. Id = " + id + " and Type: " + Book.class.getName()));
+                "Object not found. Id: " + id + " and Type: " + Book.class.getName()));
     }
 
-    public List<Book> findAll() {
-        return this.bookRepository.findAll();
+    public List<Book> findAll(Integer id_category) {
+        this.categoryService.findById(id_category);
+        return this.bookRepository.findAllByCategoryIdLike(id_category);
     }
 
     public Book create(Book book) {
@@ -35,16 +37,16 @@ public class BookService {
     }
 
     @Transactional
-    public Book update(Integer id, BookDTO bookDTO) {
+    public Book update(Integer id, Book book) {
         final var obj = findById(id);
-        if (bookDTO.getTitle() != null && !bookDTO.getTitle().isEmpty()) {
-            obj.setTitle(bookDTO.getTitle());
+        if (book.getTitle() != null && !book.getTitle().isEmpty()) {
+            obj.setTitle(book.getTitle());
         }
-        if (bookDTO.getAuthor_name() != null && !bookDTO.getAuthor_name().isEmpty()) {
-            obj.setAuthor_name(bookDTO.getAuthor_name());
+        if (book.getAuthor_name() != null && !book.getAuthor_name().isEmpty()) {
+            obj.setAuthor_name(book.getAuthor_name());
         }
-        if (bookDTO.getDescription() != null && !bookDTO.getDescription().isEmpty()) {
-            obj.setDescription(bookDTO.getDescription());
+        if (book.getDescription() != null && !book.getDescription().isEmpty()) {
+            obj.setDescription(book.getDescription());
         }
         return this.bookRepository.save(obj);
     }
