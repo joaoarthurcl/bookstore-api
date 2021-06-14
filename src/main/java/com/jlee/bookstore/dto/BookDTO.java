@@ -26,7 +26,7 @@ public class BookDTO implements Serializable {
         super();
         this.id = book.getId();
         this.title = book.getTitle();
-        this.author_name = book.getAuthorName();
+        this.author_name = book.getAuthor_name();
         this.description = book.getDescription();
     }
 }

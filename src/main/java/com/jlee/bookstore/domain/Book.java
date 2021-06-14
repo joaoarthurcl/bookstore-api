@@ -29,7 +29,7 @@ public class Book implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String title;
-    private String authorName;
+    private String author_name;
     private String description;
 
     @JsonIgnore
@@ -40,7 +40,7 @@ public class Book implements Serializable {
     public static Book ofDTO(final BookDTO bookDTO) {
         return Book.builder()
                 .title(bookDTO.getTitle())
-                .authorName(bookDTO.getAuthor_name())
+                .author_name(bookDTO.getAuthor_name())
                 .description(bookDTO.getDescription())
                 .build();
     }
