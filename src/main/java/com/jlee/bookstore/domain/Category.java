@@ -1,6 +1,8 @@
 package com.jlee.bookstore.domain;
 
+import com.jlee.bookstore.dto.CategoryDTO;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -19,6 +21,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Category implements Serializable {
     public static final long serialVersionUID = 5024048380744116098L;
 
@@ -35,5 +38,12 @@ public class Category implements Serializable {
         this.id = id;
         this.name = name;
         this.description = description;
+    }
+
+    public static Category ofDTO(final CategoryDTO categoryDTO) {
+        return Category.builder()
+                .name(categoryDTO.getName())
+                .description(categoryDTO.getDescription())
+                .build();
     }
 }

@@ -1,8 +1,12 @@
 package com.jlee.bookstore.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.jlee.bookstore.dto.BookDTO;
+import com.jlee.bookstore.dto.CategoryDTO;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import net.minidev.json.annotate.JsonIgnore;
 
@@ -18,6 +22,8 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Book implements Serializable {
     public static final long serialVersionUID = 5024048380744116098L;
 
@@ -25,12 +31,20 @@ public class Book implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String title;
-    private String author_name;
+    private String authorName;
     private String description;
 
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    public static Book ofDTO(final BookDTO bookDTO) {
+        return Book.builder()
+                .title(bookDTO.getTitle())
+                .authorName(bookDTO.getAuthor_name())
+                .description(bookDTO.getDescription())
+                .build();
+    }
 
 }

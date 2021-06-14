@@ -1,9 +1,11 @@
 package com.jlee.bookstore.services;
 
 import com.jlee.bookstore.domain.Category;
+import com.jlee.bookstore.dto.CategoryDTO;
 import com.jlee.bookstore.exceptions.ObjectNotFoundException;
 import com.jlee.bookstore.repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,4 +32,17 @@ public class CategoryService {
         category.setId(null);
         return categoryRepository.save(category);
     }
+
+    @Transactional
+    public Category update(Integer id, CategoryDTO categoryDTO) {
+        var obj = findById(id);
+        if (categoryDTO.getName() != null && !categoryDTO.getName().isEmpty()) {
+            obj.setName(categoryDTO.getName());
+        }
+        if (categoryDTO.getDescription() != null && !categoryDTO.getDescription().isEmpty()) {
+            obj.setDescription(categoryDTO.getDescription());
+        }
+        return this.categoryRepository.save(obj);
+    }
+
 }
