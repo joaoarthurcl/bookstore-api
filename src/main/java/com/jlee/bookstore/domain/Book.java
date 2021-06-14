@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
@@ -28,8 +30,17 @@ public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @NotNull(message = "Field title is required!")
+    @Length(min = 3, max = 50, message = "Min = 3 and Max = 50")
     private String title;
+
+    @NotNull(message = "Field author_name is required!")
+    @Length(min = 3, max = 50, message = "Min = 3 and Max = 50")
     private String author_name;
+
+    @NotNull(message = "Field description is required!")
+    @Length(min = 3, max = 2000000, message = "Min = 3 and Max = 2000000")
     private String description;
 
     @JsonIgnore

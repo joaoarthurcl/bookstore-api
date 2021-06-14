@@ -6,7 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
@@ -18,7 +20,13 @@ public class CategoryDTO implements Serializable {
     public static final long serialVersionUID = 8857942005721366061L;
 
     private Integer id;
+
+    @NotNull(message = "Field name is required!")
+    @Length(min = 3, max = 100, message = "Min = 3 and Max = 100")
     private String name;
+
+    @NotNull(message = "Field description is required!")
+    @Length(min = 3, max = 200, message = "Min = 3 and Max = 200")
     private String description;
 
     public CategoryDTO(Category category) {

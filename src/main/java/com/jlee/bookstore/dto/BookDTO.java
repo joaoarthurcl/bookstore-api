@@ -5,7 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
@@ -17,6 +19,8 @@ public class BookDTO implements Serializable {
     public static final long serialVersionUID = 8857942005721366061L;
 
     private Integer id;
+    @NotNull(message = "Field title is required!")
+    @Length(min = 3, max = 50, message = "Min = 3 and Max = 50")
     private String title;
 
     public BookDTO(com.jlee.bookstore.domain.Book book) {
