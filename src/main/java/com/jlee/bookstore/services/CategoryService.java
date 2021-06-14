@@ -1,6 +1,7 @@
 package com.jlee.bookstore.services;
 
 import com.jlee.bookstore.domain.Category;
+import com.jlee.bookstore.exceptions.ObjectNotFoundException;
 import com.jlee.bookstore.repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,6 @@ public class CategoryService {
 
     public Category findById(Integer id){
         Optional<Category> categoryId = categoryRepository.findById(id);
-        return categoryId.orElse(null);
+        return categoryId.orElseThrow(() -> new ObjectNotFoundException("Object not found. Id = " + id + " and Type: " + Category.class.getName()));
     }
 }
