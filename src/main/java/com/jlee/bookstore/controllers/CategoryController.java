@@ -4,6 +4,7 @@ import com.jlee.bookstore.domain.Category;
 import com.jlee.bookstore.dto.CategoryDTO;
 import com.jlee.bookstore.services.CategoryService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RestController
+@Controller
 @RequestMapping("/categories")
 public class CategoryController {
 
