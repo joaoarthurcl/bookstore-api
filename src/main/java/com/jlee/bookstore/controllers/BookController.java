@@ -49,9 +49,9 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<Book> create(@RequestBody Book book) {
-        book = this.bookService.create(book);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(book.getId()).toUri();
+    public ResponseEntity<Book> create(@RequestParam(value = "category", defaultValue = "0") Integer id_category, @RequestBody Book book) {
+        book = this.bookService.create(id_category, book);
+        URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/books/{id}").buildAndExpand(book.getId()).toUri();
         return ResponseEntity.created(uri).body(book);
     }
 

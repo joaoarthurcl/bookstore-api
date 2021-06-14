@@ -31,8 +31,14 @@ public class BookService {
         return this.bookRepository.findAllByCategoryIdLike(id_category);
     }
 
-    public Book create(Book book) {
+    public List<Book> findAll() {
+        return this.bookRepository.findAll();
+    }
+
+    public Book create(Integer id_category, Book book) {
         book.setId(null);
+        final var category = categoryService.findById(id_category);
+        book.setCategory(category);
         return this.bookRepository.save(book);
     }
 
@@ -60,7 +66,4 @@ public class BookService {
         this.bookRepository.deleteById(id);
     }
 
-    public List<Book> findAll() {
-        return this.bookRepository.findAll();
-    }
 }
