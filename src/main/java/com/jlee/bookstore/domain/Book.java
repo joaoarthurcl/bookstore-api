@@ -1,8 +1,10 @@
 package com.jlee.bookstore.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,6 +28,7 @@ public class Book implements Serializable {
     private String author_name;
     private String description;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
