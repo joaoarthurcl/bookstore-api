@@ -4,6 +4,7 @@ import com.jlee.bookstore.domain.Category;
 import com.jlee.bookstore.dto.CategoryDTO;
 import com.jlee.bookstore.exceptions.ObjectNotFoundException;
 import com.jlee.bookstore.repositories.CategoryRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,6 +49,10 @@ public class CategoryService {
     @Transactional
     public void delete(Integer id) {
         findById(id);
-        this.categoryRepository.deleteById(id);
+        try {
+            this.categoryRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new com.jlee.bookstore.exceptions.DataIntegrityViolationException("Category cannot be deleted! It has associated books.");
+        }
     }
 }
