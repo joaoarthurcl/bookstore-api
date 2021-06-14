@@ -1,6 +1,5 @@
 package com.jlee.bookstore.dto;
 
-import com.jlee.bookstore.domain.Book;
 import com.jlee.bookstore.domain.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

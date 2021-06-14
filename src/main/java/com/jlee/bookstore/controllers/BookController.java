@@ -42,6 +42,12 @@ public class BookController {
         return ResponseEntity.ok().body(booksDTO);
     }
 
+    @GetMapping("/without-category")
+    public ResponseEntity<List<Book>> findAll() {
+        final var books = this.bookService.findAll();
+        return ResponseEntity.ok().body(books);
+    }
+
     @PostMapping
     public ResponseEntity<Book> create(@RequestBody Book book) {
         book = this.bookService.create(book);

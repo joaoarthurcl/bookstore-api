@@ -38,21 +38,29 @@ public class BookService {
 
     @Transactional
     public Book update(Integer id, Book book) {
-        final var obj = findById(id);
+        final var newBook = findById(id);
+        updateData(book, newBook);
+        return this.bookRepository.save(newBook);
+    }
+
+    private void updateData(Book book, Book newBook) {
         if (book.getTitle() != null && !book.getTitle().isEmpty()) {
-            obj.setTitle(book.getTitle());
+            newBook.setTitle(book.getTitle());
         }
         if (book.getAuthor_name() != null && !book.getAuthor_name().isEmpty()) {
-            obj.setAuthor_name(book.getAuthor_name());
+            newBook.setAuthor_name(book.getAuthor_name());
         }
         if (book.getDescription() != null && !book.getDescription().isEmpty()) {
-            obj.setDescription(book.getDescription());
+            newBook.setDescription(book.getDescription());
         }
-        return this.bookRepository.save(obj);
     }
 
     public void delete(Integer id) {
         findById(id);
         this.bookRepository.deleteById(id);
+    }
+
+    public List<Book> findAll() {
+        return this.bookRepository.findAll();
     }
 }

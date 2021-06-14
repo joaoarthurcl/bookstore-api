@@ -8,7 +8,5 @@ import java.util.List;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Integer> {
-   // List<Book> findBooksByCategoryIsTrue(Integer id_category);
-
-   List<Book> findAllByCategoryIdLike(Integer id_cat);
+    List<Book> findAllByCategoryIdLike(Integer id_cat);
 }
