@@ -4,6 +4,7 @@ import com.jlee.bookstore.domain.Category;
 import com.jlee.bookstore.dto.CategoryDTO;
 import com.jlee.bookstore.services.CategoryService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,5 +54,11 @@ public class CategoryController {
     public ResponseEntity<CategoryDTO> update(@PathVariable Integer id, @RequestBody CategoryDTO categoryDTO) {
         Category category = categoryService.update(id, categoryDTO);
         return ResponseEntity.ok().body(new CategoryDTO(category));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+       categoryService.delete(id);
+       return ResponseEntity.noContent().build();
     }
 }
